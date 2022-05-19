@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 //Models
@@ -64,7 +62,7 @@ const reviewRestaurant = catchAsync(async (req, res, next) => {
   const userId = req.sessionUser.id;
   const review = new Review({ userId, comment, rating, restaurantId });
   await review.save();
-  res.status(201).json({ status:'success' });
+  res.status(201).json({ status: 'success' });
 });
 
 //Update revieew

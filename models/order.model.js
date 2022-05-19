@@ -25,7 +25,7 @@ const Order = db.define('order', {
   },
   status: {
     type: DataTypes.STRING,
-    defaultValue: 'active' || 'cancelled' || 'completed'
+    defaultValue: 'active' || 'cancelled' || 'completed',
   },
 });
 module.exports = { Order };

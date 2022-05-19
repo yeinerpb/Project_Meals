@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 // Models
@@ -7,7 +5,6 @@ const { Meal } = require('../models/meal.model');
 const { Restaurant } = require('../models/restaurant.model');
 // Utils
 const { catchAsync } = require('../utils/catchAsync');
-const { AppError } = require('../utils/appError');
 
 dotenv.config({ path: './config.env' });
 

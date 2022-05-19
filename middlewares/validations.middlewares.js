@@ -33,9 +33,7 @@ const createMealsValidations = [
   body('name').notEmpty().withMessage('Name cannot be empty'),
   body('price').notEmpty().withMessage('Price cannot be empty'),
   body('restaurantId').notEmpty().withMessage('RestaurantId cannot be empty'),
-]
-
-
+];
 
 const checkValidations = (req, res, next) => {
   const errors = validationResult(req);

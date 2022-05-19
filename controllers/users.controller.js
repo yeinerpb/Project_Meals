@@ -7,12 +7,11 @@ const dotenv = require('dotenv');
 // Models
 const { User } = require('../models/user.model');
 const { Order } = require('../models/order.model');
-const { Meal } = require('../models/meal.model')
+const { Meal } = require('../models/meal.model');
 
 // Utils
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
-
 
 dotenv.config({ path: './config.env' });
 
@@ -26,7 +25,7 @@ const createUser = catchAsync(async (req, res, next) => {
     name,
     email,
     password: hashPassword,
-    role
+    role,
   });
 
   // Remove password from response
@@ -119,4 +118,3 @@ module.exports = {
   login,
   checkToken,
 };
-

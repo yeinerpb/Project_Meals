@@ -16,7 +16,7 @@ const initModels = () => {
 
   Restaurant.hasMany(Meal);
   Meal.belongsTo(Restaurant);
-  
+
   Restaurant.hasMany(Review);
   Review.belongsTo(Restaurant);
 };

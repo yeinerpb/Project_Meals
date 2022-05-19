@@ -29,7 +29,7 @@ router.get('/me', protectToken, orderExists, getOrderById);
 
 router
   .route('/:id')
-  .patch(protectToken,  orderCompleted)
+  .patch(protectToken, orderCompleted)
   .delete(protectToken, orderCancelled);
 
 module.exports = { ordersRouter: router };

@@ -34,10 +34,9 @@ router
   .patch(protectToken, protectAdmin, updateRestaurant)
   .delete(protectToken, protectAdmin, deleteRestaurant);
 
-
 router
   .route('/reviews/:id')
-  .post( protectToken, reviewRestaurant)
+  .post(protectToken, reviewRestaurant)
 
   .patch(protectToken)
   .delete(protectToken);
