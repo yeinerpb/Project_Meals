@@ -65,9 +65,19 @@ const reviewRestaurant = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: 'success' });
 });
 
-//Update revieew
-
-//Delete review
+const updateReview = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const { comment, rating } = req.body;
+  const review = await Review.findOne({ where: { id } });
+  await review.update({ comment, rating });
+  res.status(200).json({ status: 'success' });
+});
+const deleteReview = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const review = await Review.findOne({ where: { id } });
+  await review.update({ status: 'deleted' });
+  res.status(200).json({ status: 'success' });
+});
 
 module.exports = {
   createNewRestaurant,
@@ -76,4 +86,6 @@ module.exports = {
   updateRestaurant,
   deleteRestaurant,
   reviewRestaurant,
+  updateReview,
+  deleteReview,
 };

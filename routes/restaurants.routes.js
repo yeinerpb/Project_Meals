@@ -7,10 +7,13 @@ const {
   updateRestaurant,
   deleteRestaurant,
   reviewRestaurant,
+  updateReview,
+  deleteReview,
 } = require('../controllers/restaurants.controller');
 const {
   protectToken,
   protectAdmin,
+  protectAccountOwner,
 } = require('../middlewares/users.middlewares');
 const {
   createRestaurantValidations,
@@ -38,7 +41,7 @@ router
   .route('/reviews/:id')
   .post(protectToken, reviewRestaurant)
 
-  .patch(protectToken)
-  .delete(protectToken);
+  .patch(protectToken, protectAccountOwner, updateReview)
+  .delete(protectToken, protectAccountOwner, deleteReview);
 
 module.exports = { restaurantsRouter: router };
