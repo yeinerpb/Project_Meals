@@ -20,4 +20,4 @@ const initModels = () => {
   Restaurant.hasMany(Review);
   Review.belongsTo(Restaurant);
 };
-module.exports = { initModels };
+module.exports = {initModels};

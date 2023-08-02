@@ -29,6 +29,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+
 // Endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/restaurants', restaurantsRouter);
