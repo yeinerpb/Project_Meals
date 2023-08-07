@@ -39,4 +39,9 @@ app.use('/api/v1/orders', ordersRouter);
 // Global error handler
 app.use('*', globalErrorHandler);
 
+app.get("/", (req, res) => {
+  res.send("Bienvenido a la aplicación de Node.js y React");
+});
+
+
 module.exports = { app };

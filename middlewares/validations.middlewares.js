@@ -20,13 +20,20 @@ const createUserValidations = [
 const createRestaurantValidations = [
   body('name').notEmpty().withMessage('Name cannot be empty'),
   body('address').notEmpty().withMessage('Address cannot be empty'),
-  body('raating')
-    .notEmpty()
-    .withMessage('Rating cannot be empty')
-    .isLength({ max: 1 })
-    .withMessage('Rating must be one number')
-    .contains(1 || 2 || 3 || 4 || 5)
-    .withMessage('Rating must be between 1 and 5'),
+  body('rating')
+  .notEmpty()
+  .withMessage('Rating cannot be empty')
+  .isLength({ max: 1 })
+  .withMessage('Rating must be one number')
+  .custom((value) => {
+    const rating = Number(value);
+    if (rating >= 1 && rating <= 5) {
+      return true;
+    } else {
+      throw new Error('Rating must be between 1 and 5');
+    }
+  }),
+
 ];
 
 const createMealsValidations = [

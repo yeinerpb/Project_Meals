@@ -21,6 +21,7 @@
     "sequelize": "^6.19.0"
   },
   "devDependencies": {
+    "express-list-endpoints": "^6.0.0",
     "nodemon": "^2.0.15"
   }
 }

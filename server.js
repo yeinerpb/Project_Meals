@@ -1,5 +1,10 @@
 const { app } = require('./app');
 
+const expressListEndpoints = require('express-list-endpoints');
+
+const routes = expressListEndpoints(app);
+console.log(routes);
+
 // Models
 const { initModels } = require('./models/initModels');
 
