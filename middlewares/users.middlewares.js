@@ -63,15 +63,13 @@ const userExists = catchAsync(async (req, res, next) => {
 
   // Add user data to the req object
   req.user = user;
+  console.log('req.user:', req.user);
   next();
 });
 
 const protectAccountOwner = catchAsync(async (req, res, next) => {
   // Get current session user and the user that is going to be updated
   const { sessionUser, user } = req;
-  
-  console.log('sessionUser:', sessionUser);
-  console.log('user:', user);
   // Compare the id's
   if (sessionUser.id !== user.id) {
     // If the ids aren't equal, return error

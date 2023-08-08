@@ -3,6 +3,7 @@ const express = require('express');
 const {
   protectToken,
   protectAccountOwner,
+  userExists,
 } = require('../middlewares/users.middlewares');
 
 const {
@@ -29,7 +30,7 @@ router.get('/orders/:id', protectToken, getOrderById);
 
 router
   .route('/:id')
-  .patch(protectToken, protectAccountOwner, updateUser)
-  .delete(protectToken, protectAccountOwner, deleteUser);
+  .patch(protectToken, userExists, protectAccountOwner, updateUser)
+  .delete(protectToken, userExists, protectAccountOwner, deleteUser);
 
 module.exports = { usersRouter: router };
