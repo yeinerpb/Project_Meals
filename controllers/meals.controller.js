@@ -11,14 +11,15 @@ dotenv.config({ path: './config.env' });
 const createNewMeals = catchAsync(async (req, res, next) => {
   const { name, price } = req.body;
   const { restaurantId } = req.params;
-
   const newMeal = await Meal.create({
     name,
     price,
     restaurantId,
   });
+
   res.status(201).json({ newMeal });
 });
+
 
 const getAllMeals = catchAsync(async (req, res, next) => {
   const meal = await Meal.findAll({
@@ -44,8 +45,8 @@ const updateMealById = catchAsync(async (req, res, next) => {
   const { name, price } = req.body;
 
   const meal = await Meal.findOne({ where: { id } });
-
-  await meal.update({ name, price });
+  const updatedPrice = parseFloat(price);
+  await meal.update({ name, price: updatedPrice });
 
   res.status(200).json({ status: 'success' });
 });

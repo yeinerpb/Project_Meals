@@ -63,7 +63,6 @@ const userExists = catchAsync(async (req, res, next) => {
 
   // Add user data to the req object
   req.user = user;
-  console.log('req.user:', req.user);
   next();
 });
 

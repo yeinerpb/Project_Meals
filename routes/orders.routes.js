@@ -12,20 +12,20 @@ const {
   protectAccountOwner,
 } = require('../middlewares/users.middlewares');
 const {
-  createMealsValidations,
   checkValidations,
+  createOrderValidations,
 } = require('../middlewares/validations.middlewares');
 const router = express.Router();
 
 router.post(
   '/',
   protectToken,
-  createMealsValidations,
+  createOrderValidations,
   checkValidations,
   createOrder
 );
 
-router.get('/me', protectToken, orderExists, getOrderById);
+router.get('/me/:id', protectToken, orderExists, getOrderById);
 
 router
   .route('/:id')

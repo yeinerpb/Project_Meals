@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const { body, validationResult, param } = require('express-validator');
 
 // Utils
 const { AppError } = require('../utils/appError');
@@ -21,25 +21,23 @@ const createRestaurantValidations = [
   body('name').notEmpty().withMessage('Name cannot be empty'),
   body('address').notEmpty().withMessage('Address cannot be empty'),
   body('rating')
-  .notEmpty()
-  .withMessage('Rating cannot be empty')
-  .isLength({ max: 1 })
-  .withMessage('Rating must be one number')
-  .custom((value) => {
-    const rating = Number(value);
-    if (rating >= 1 && rating <= 5) {
-      return true;
-    } else {
-      throw new Error('Rating must be between 1 and 5');
-    }
-  }),
-
+    .notEmpty()
+    .withMessage('Rating cannot be empty')
+    .isNumeric()
+    .withMessage('Rating must be a number')
+    .isFloat({ min: 1, max: 5 })
+    .withMessage('Rating must be between 1 and 5'),
 ];
+
+module.exports = { createRestaurantValidations };
+
 
 const createMealsValidations = [
   body('name').notEmpty().withMessage('Name cannot be empty'),
-  body('price').notEmpty().withMessage('Price cannot be empty'),
-  body('restaurantId').notEmpty().withMessage('RestaurantId cannot be empty'),
+  body('price')
+  .notEmpty().withMessage('Price cannot be empty')
+  .isDecimal().withMessage('Price must be a valid decimal number'),
+  param('restaurantId').notEmpty().withMessage('RestaurantId cannot be empty'),
 ];
 
 const checkValidations = (req, res, next) => {
@@ -57,9 +55,16 @@ const checkValidations = (req, res, next) => {
   next();
 };
 
+const createOrderValidations = [
+  body('mealId').notEmpty().withMessage('MealId cannot be empty'),
+  body('quantity').notEmpty().withMessage('Quantity cannot be empty'),
+];
+
+
 module.exports = {
   createUserValidations,
   createRestaurantValidations,
   createMealsValidations,
   checkValidations,
+  createOrderValidations
 };

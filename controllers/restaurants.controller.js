@@ -72,6 +72,7 @@ const updateReview = catchAsync(async (req, res, next) => {
   await review.update({ comment, rating });
   res.status(200).json({ status: 'success' });
 });
+
 const deleteReview = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const review = await Review.findOne({ where: { id } });

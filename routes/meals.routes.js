@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 const {
@@ -8,7 +7,7 @@ const {
   getMealtById,
   updateMealById,
   deleteMeal,
-} = require('../controllers/meals.controlleres');
+} = require('../controllers/meals.controller');
 const {
   protectToken,
   protectAdmin,
@@ -17,14 +16,17 @@ const {
   createMealsValidations,
   checkValidations,
 } = require('../middlewares/validations.middlewares');
+const { restaurantExists } = require('../middlewares/restaurants.middlewares');
 
 router.get('/', getAllMeals);
+
 router.post(
   '/:restaurantId',
   protectToken,
   createMealsValidations,
   checkValidations,
-  createNewMeals
+  restaurantExists,
+  createNewMeals,
 );
 
 router

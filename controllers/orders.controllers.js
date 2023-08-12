@@ -1,5 +1,7 @@
 const { Meal } = require('../models/meal.model');
 const { Order } = require('../models/order.model');
+const { Restaurant } = require('../models/restaurant.model');
+
 
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
@@ -11,11 +13,12 @@ const createOrder = catchAsync(async (req, res, next) => {
   if (!meal) {
     return next(new AppError('Meal not found', 404));
   }
-  const totalPrice = meal.price * quantity;
+  const totalPrice = (meal.price * quantity); 
+  const roundedTotalPrice = Math.round(totalPrice * 100) / 100; 
   const newOrder = await Order.create({
     mealId,
     quantity,
-    totalPrice,
+    totalPrice: roundedTotalPrice.toFixed(2), 
     userId: sessionUser.id,
   });
   res.status(201).json({
@@ -23,24 +26,31 @@ const createOrder = catchAsync(async (req, res, next) => {
     newOrder,
   });
 });
-const getOrderById = catchAsync(async (req, res, next) => {
-  const { user } = req;
-  const { id } = req.params;
-  // Get order
-  const order = await Order.findOne({
-    where: {
-      userId: user.id,
-      id,
-    },
-    include: [
-      {
-        model: Meal,
-        attributes: ['id', 'name', 'price'],
-        include: [{ model: Restaurant, attributes: ['id', 'name'] }],
-      },
-    ],
-  });
-});
+
+const getOrderById = async (req, res, next) => {
+  try {
+    const orderId = req.params.id;
+    const order = await Order.findOne({
+      where: { id: orderId },
+      include: [
+        {
+          model: Meal,
+          attributes: ['id', 'name', 'price'],
+          include: [{ model: Restaurant, attributes: ['id', 'name'] }],
+        },
+      ],
+    });
+
+    if (!order) {
+      return res.status(404).json({ status: 'fail', message: 'Order not found' });
+    }
+
+    res.status(200).json({ status: 'success', order });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const orderCompleted = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const order = await Order.findOne({

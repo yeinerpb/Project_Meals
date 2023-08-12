@@ -13,14 +13,14 @@ const {
 const {
   protectToken,
   protectAdmin,
-  protectAccountOwner,
 } = require('../middlewares/users.middlewares');
 const {
   createRestaurantValidations,
   checkValidations,
 } = require('../middlewares/validations.middlewares');
+const { restaurantExists } = require('../middlewares/restaurants.middlewares');
 const router = express.Router();
-router.post('/reviews/:id', reviewRestaurant);
+
 router
   .route('/')
   .post(
@@ -29,19 +29,18 @@ router
     checkValidations,
     createNewRestaurant
   )
-  .get(getAllRestaurants); //
+  .get(getAllRestaurants);
 
 router
   .route('/:id')
-  .get(getRestaurantById) //
+  .get(getRestaurantById)
   .patch(protectToken, protectAdmin, updateRestaurant)
   .delete(protectToken, protectAdmin, deleteRestaurant);
 
 router
   .route('/reviews/:id')
-  .post(protectToken, reviewRestaurant)
-
-  .patch(protectToken, protectAccountOwner, updateReview)
-  .delete(protectToken, protectAccountOwner, deleteReview);
+  .post(protectToken,  reviewRestaurant)
+  .patch(protectToken,  updateReview)
+  .delete(protectToken,  deleteReview);
 
 module.exports = { restaurantsRouter: router };
