@@ -18,7 +18,7 @@ const createOrder = catchAsync(async (req, res, next) => {
   const newOrder = await Order.create({
     mealId,
     quantity,
-    totalPrice: roundedTotalPrice.toFixed(2), 
+    totalPrice: roundedTotalPrice, 
     userId: sessionUser.id,
   });
   res.status(201).json({
